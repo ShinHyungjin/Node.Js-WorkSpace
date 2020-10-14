@@ -65,8 +65,11 @@ $(function(){
 <form action="">
     <table align="center">
         <tr>
+            <td colspan="2" align="center">회원정보 상세</td>
+        </tr>
+        <tr>
             <td>아이디</td>
-            <td><input type="text" name="uid"></td>
+            <td><input type="text" name="uid" value="<%=member.uid%>"/></td>
         </tr>
         <tr>
             <td>패스워드</td>
@@ -74,11 +77,11 @@ $(function(){
         </tr>
         <tr>
             <td>이름</td>
-            <td><input type="text" name="uname"></td>
+            <td><input type="text" name="uname" value="<%=member.uname%>"/></td>
         </tr>
         <tr>
             <td>핸드폰</td>
-            <td><input type="text" name="phone"></td>
+            <td><input type="text" name="phone"  value="<%=member.phone%>"/></td>
         </tr>
         <tr>
             <td>이메일</td>
@@ -103,7 +106,7 @@ $(function(){
 
         <tr>
             <td>주소</td>
-            <td><input type="text" name="addr"></td>
+            <td><input type="text" name="addr"  value="<%=member.addr%>"/></td>
         </tr>
 
         <tr>

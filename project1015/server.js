@@ -43,6 +43,8 @@ var server = http.createServer(function (request, response) {
     } else if (urljson.pathname == "/category") {
         getCategory(request, response);
         //console.log(request.url);
+    } else if (urljson.pathname == "/animal") {
+        getAnimal(request, response);
     }
 });
 
@@ -185,6 +187,18 @@ function update(request, response) {
     //response.end(sql);
 
 }
+
+// function getCategoryList() {
+//     var categoryArray = [];
+//     var sql = "select * from category";
+//     con.query(sql, function (error, record, fields) {
+//         if (error) {
+//             console.log("동물구분 목록 조회실패", error);
+//         } else {
+//             categoryArray = record;
+//         }
+//     });
+// }
 //동물의 종류 가져오기 
 function getCategory(request, response){
     var sql="select * from category";
@@ -206,6 +220,50 @@ function getCategory(request, response){
         }
     });
 }
+
+//소속된 동물의 목록 가져오기
+function getAnimal(request, response){
+    //카테고리 가져오기 
+    var sql="select * from category";
+    con.query(sql, function(error, record, fields){
+        if(error){
+            console.log("동물구분 목록 조회실패", error);
+        }else{
+            var categoryRecord=record; //카테고리 목록 배열
+
+            category_id = urljson.query.category_id;//get방식의 category_id 파라미터 받기!!
+            sql="select * from animal where category_id="+category_id;
+        
+            //mysql연동 
+            con.query(sql, function(error, record, fields){
+                if(error){
+                    console.log("동물목록 가져오기 실패", error);
+                }else{
+                    console.log("record : " , record);
+        
+                    fs.readFile("./animal.ejs","utf-8", function(err, data){
+                        if(err){
+                            console.log("animal.ejs읽기 실패", err);
+                        }else{
+                            response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
+                            //console.log(category_id);
+                            response.end(ejs.render(data, {
+                                animalArray:record, 
+                                categoryArray:categoryRecord,
+                                category_id : category_id
+                            }));
+                        }
+                    });
+        
+                }
+            });
+        }
+    });
+
+
+
+}
+
 function ConnectionDB() {
     con = mysql.createConnection(conStr);
 }

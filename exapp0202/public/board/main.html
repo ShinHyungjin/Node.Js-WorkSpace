@@ -137,7 +137,7 @@ function regist(){
         data: JSON.stringify(json), 
         contentType:"application/json;charset=utf-8",
         success:function(responseData){
-            console.log(responseData);
+            console.log(responseData.resultCode);
         },
         error:function(xhr, result, error){
             console.log(xhr);
@@ -152,8 +152,8 @@ function getList(){
         type:"GET",
         success:function(responseData){
             //화면 갱신..react로...
-            console.log(responseData);
-            ReactDOM.render(<TableContent dataList={responseData}/>, document.getElementById("list-area"));
+            console.log(responseData.data);
+            ReactDOM.render(<TableContent dataList={responseData.data}/>, document.getElementById("list-area"));
 
         }
     });
